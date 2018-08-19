@@ -82,6 +82,7 @@ public class SunflowerController {
 			Map<String,Object> resultMap = new HashMap<String,Object>();
 			//计算总页数
 			Integer totalCount  = metadataService.totalCount(paramMap);
+
 			int totalPage = totalCount/10 +1 ;
 			//计算数据列表
 			List<Map<String, Object>> retList = metadataService.initList(paramMap);

@@ -31,6 +31,12 @@ public class MetadataController {
         return "jsp/metaList";
     }
 
+
+    @RequestMapping("/studentAccount.do") //url
+    public String studentAccount(HttpServletRequest req, Model model) {
+        return "students/studentAccount";
+    }
+
     /**
      * 跳转表详情
      * @param req
