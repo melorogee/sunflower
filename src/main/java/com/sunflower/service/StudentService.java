@@ -10,4 +10,12 @@ public interface StudentService {
 
     //根据学生id获取该学生所上课程信息，与该课程剩余的课程
     List<Map<String, Object>> getStudentClassInfo(String student_id);
+
+    //微信获取accesstoken
+    String getAccessTokenOfJssdk();
+
+    //微信获取jsapi ticket
+    String getJsapiTicketOfJssdk(String accessToken);
+
+    Integer getStudentIdByName(String studentName);
 }

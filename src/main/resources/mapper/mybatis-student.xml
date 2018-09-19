@@ -24,4 +24,27 @@
 			t.student_id = #{0}
     </select>
 
+
+    <select id="selectGlobalAccessToken" resultType="map">
+       select token,time from wx_token order by time desc
+    </select>
+
+    <insert id="updateGlobalAccessToken" parameterType="java.lang.String">
+      insert into wx_token values (#{0},#{1})
+    </insert>
+
+
+    <select id="selectJsapiTicket" resultType="map">
+       select ticket,time from wx_ticket order by time desc
+    </select>
+
+
+    <insert id="updateJsapiTicket" parameterType="java.lang.String">
+      insert into wx_ticket values (#{0},#{1})
+    </insert>
+
+
+    <select id="getStudentIdByName" resultType="java.lang.Integer">
+      select student_id from student_info where student_name = #{0}
+    </select>
 </mapper>

@@ -80,7 +80,7 @@
 	<url-pattern>*.do</url-pattern>
 </servlet-mapping>
 
-<filter>
+	<filter>
 	<description>字符集过滤器</description>
 	<filter-name>encodingFilter</filter-name>
 	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

@@ -259,8 +259,10 @@
             transform: scale(0.501);
         }
     </style>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
 </head>
-
+<body>
+<img id="share_img" src="images/logo.jpg" style="position:absolute; top:0; left:0;  width: 80%; z-index:-1;opacity: 0; "/>
 
 <section class="aui-flexView">
     <header class="aui-navBar aui-navBar-fixed">
@@ -330,84 +332,189 @@
             </div>
         </div>
     </section>
+
+
+
+
     <footer class="aui-tabBar aui-tabBar-fixed">
+
     </footer>
+
 </section>
 
 
 <script src="../studentAccount/js/swiper.min.js"></script>
 <script type="text/javascript">
+
+    var title = "特朗普结束访华 离开北京";//分享标题
+    var desc = "朗普访华#[美国总统特朗普结束访华]美国总统特朗普10日上午结束对中国的国事访问，乘专机离开北京。";//分享描述
+    var link = "${wechatSign.pageUrl}";//分享链接
+    var imgUrl = "http://n.sinaimg.cn/news/transform/20171110/AvUQ-fynstfh3322960.jpg";//图片图标
+
+    wx.config({
+        debug: false,
+        appId: '${wechatSign.appid}',//公众号appid
+        timestamp:'${wechatSign.timestamp}', //生成签名时间戳
+        nonceStr:'${wechatSign.noncestr}', //生成签名随机字符串
+        signature:'${wechatSign.signature}', //签名
+        jsApiList: [
+            'checkJsApi',
+            'onMenuShareTimeline',
+            'onMenuShareAppMessage',
+            'onMenuShareQQ',
+            'onMenuShareWeibo',
+            'onMenuShareQZone'
+        ]
+    });
+    wx.ready(function () {
+        wx.onMenuShareTimeline({
+            title: title, // 分享标题
+            desc: desc, // 分享描述
+            link: link, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                console.log("test");
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+        wx.onMenuShareAppMessage({
+            title: title, // 分享标题
+            desc: desc, // 分享描述
+            link: link, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            //type: '', // 分享类型,music、video或link，不填默认为link
+            //dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                console.log("test");
+
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+        wx.onMenuShareQQ({
+            title: title, // 分享标题
+            desc: desc, // 分享描述
+            link: link, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                console.log("test");
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+        wx.onMenuShareWeibo({
+            title: title, // 分享标题
+            desc: desc, // 分享描述
+            link: link, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                console.log("test");
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+        wx.onMenuShareQZone({
+            title: title, // 分享标题
+            desc: desc, // 分享描述
+            link: link, // 分享链接
+            imgUrl: imgUrl, // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    })
+
     $(function() {
         component.initDetailInfo();
     })
 
 
-    var component = {
-        initDetailInfo: function () {
-            $.ajax({
-                url: '/sunflower/students/getStudentAccount.do',
-                type: 'POST',
-                dataType: 'json',
-                data : {
-                    'student_id' : $("#student_id").val()
-                },
-                async: false,
-                success: function (ret) {
-                    if (ret) {
-                        $("#student_name").html(ret["baseInfo"]["student_name"]);
-                        $("#birth_day").html(ret["baseInfo"]["birth_day"]);
-                        $("#join_time").html(ret["baseInfo"]["join_time"]);
+        var component = {
+            initDetailInfo: function () {
+                $.ajax({
+                    url: '/sunflower/students/getStudentAccount.do',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        'student_id': $("#student_id").val()
+                    },
+                    async: false,
+                    success: function (ret) {
+                        if (ret) {
+                            $("#student_name").html(ret["baseInfo"]["student_name"]);
+                            $("#birth_day").html(ret["baseInfo"]["birth_day"]);
+                            $("#join_time").html(ret["baseInfo"]["join_time"]);
+                            desc = ret["baseInfo"]["join_time"] + "【"+ret["baseInfo"]["student_name"]+"】" + "同学加入向日葵，和我们一起成长"
 
-                        var classInfo = ret["classInfo"];
-                        for (var i = 0; i < classInfo.length; i++) {
-                            var html = " <div class=\"aui-card-list\">\n" +
-                                "                <a href=\"javascript:void(0);\" class=\"aui-well-item\">\n" +
-                                "                    <div class=\"aui-well-item-hd\">\n" +
-                                "                        <img src=\"../studentAccount/images/icon-vip.png\" alt=\"\">\n" +
-                                "                    </div>\n" +
-                                "                    <div class=\"aui-well-item-bd\">\n" +
-                                "                        <h3 id=\"class_sub_type\">"+classInfo[i]["class_sub_type"]+"</h3>\n" +
-                                "                    </div>\n" +
-                                "                    <span class=\"aui-well-item-fr\" id=\"left_class\">剩余"+classInfo[i]["left_class"]+"课时</span>\n" +
-                                "                </a>\n" +
-                                "            </div>";
-                            $("#class_info_div").append(html);
-                        }
-
-
-
-                        var imgList = ret["imgList"];
-                        for (var i = 0; i < imgList.length; i++) {
-                            var html = "<div class=\"swiper-slide\" style=\"background-image:url("+imgList[i]+")\">\n" +
-                                "                            </div>";
-                            if(i == 0 ){
-                                $("#head_img").attr('src', imgList[i]);
+                            title =   ret["baseInfo"]["student_name"] + "同学的向日葵之家~";
+                            var classInfo = ret["classInfo"];
+                            for (var i = 0; i < classInfo.length; i++) {
+                                var html = " <div class=\"aui-card-list\">\n" +
+                                    "                <a href=\"javascript:void(0);\" class=\"aui-well-item\">\n" +
+                                    "                    <div class=\"aui-well-item-hd\">\n" +
+                                    "                        <img src=\"../studentAccount/images/icon-vip.png\" alt=\"\">\n" +
+                                    "                    </div>\n" +
+                                    "                    <div class=\"aui-well-item-bd\">\n" +
+                                    "                        <h3 id=\"class_sub_type\">" + classInfo[i]["class_sub_type"] + "</h3>\n" +
+                                    "                    </div>\n" +
+                                    "                    <span class=\"aui-well-item-fr\" id=\"left_class\">剩余" + classInfo[i]["left_class"] + "课时</span>\n" +
+                                    "                </a>\n" +
+                                    "            </div>";
+                                $("#class_info_div").append(html);
                             }
-                            $("#imgList").append(html);
-                        }
-                        var swiper = new Swiper('.swiper-container', {
-                            pagination: '.swiper-pagination',
-                            effect: 'coverflow',
-                            grabCursor: true,
-                            centeredSlides: true,
-                            slidesPerView: 'auto',
-                            loop: true,
-                            initialSlide: 6,
-                            coverflow: {
-                                rotate: 50,
-                                stretch: 100,
-                                depth: 400,
-                                modifier: 1,
-                                slideShadows: true
+
+
+                            var imgList = ret["imgList"];
+                            for (var i = 0; i < imgList.length; i++) {
+                                if(i <=10){
+                                var html = "<div class=\"swiper-slide\" style=\"background-image:url(" + imgList[i] + ")\">\n" +
+                                    "                            </div>";
+                                if (i == 0) {
+                                    $("#head_img").attr('src', imgList[i]);
+                                    imgUrl = imgList[i];
+                                }
+                                $("#imgList").append(html);
+                                 }
+
                             }
-                        });
-                       // $("#table_name_display").html(ret["table_name"]);
-                  }
-                }
-            });
+                            var swiper = new Swiper('.swiper-container', {
+                                pagination: '.swiper-pagination',
+                                effect: 'coverflow',
+                                grabCursor: true,
+                                centeredSlides: true,
+                                slidesPerView: 'auto',
+                                loop: true,
+                                initialSlide: 6,
+                                coverflow: {
+                                    rotate: 50,
+                                    stretch: 100,
+                                    depth: 400,
+                                    modifier: 1,
+                                    slideShadows: true
+                                }
+                            });
+                            // $("#table_name_display").html(ret["table_name"]);
+                        }
+                    }
+                });
+            }
         }
-    }
-
 </script>
 
 </body>

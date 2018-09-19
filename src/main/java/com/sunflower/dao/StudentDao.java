@@ -13,4 +13,20 @@ public interface StudentDao {
 
     //根据学生id获取该学生所上课程信息，与该课程剩余的课程
     List<Map<String, Object>> getStudentClassInfo(String student_id);
+
+    //获取最新token
+    List<Map<String, Object>>  selectGlobalAccessToken();
+
+    //入库最新token
+    void updateGlobalAccessToken(String token,String time);
+
+
+    //获取最新ticket
+    List<Map<String,Object>> selectJsapiTicket ();
+
+    //更新ticket
+    void updateJsapiTicket(String ticket,String time);
+
+    Integer getStudentIdByName(String studentName);
+
 }
