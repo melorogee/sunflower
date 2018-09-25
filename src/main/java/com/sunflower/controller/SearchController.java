@@ -115,4 +115,40 @@ public class SearchController {
         }
         return null;
     }
+
+
+
+
+
+    @RequestMapping("/time_table.do") //url
+    public String time_table(HttpServletRequest req, Model model) {
+        //微信分享接口接入
+        //获取access_token
+        String access_token = studentService.getAccessTokenOfJssdk();
+        //根据token获取jsapi_ticket
+        String jsapi_ticket = studentService.getJsapiTicketOfJssdk(access_token);
+        Long timestamp = new Date().getTime()/1000;
+        UUID uuid = UUID.randomUUID();
+        String noncestr=uuid.toString();
+        String param = req.getQueryString();
+        String pageUrl = "http://sunarts.cn/sunflower/students/time_table.do";
+        if (param != "" && param != null)
+        {
+            pageUrl = pageUrl + "?" + param;
+        }
+        System.out.println("pageUrl------------------------"+pageUrl);
+        String signature = "jsapi_ticket="+jsapi_ticket+"&noncestr="+noncestr+"&timestamp="+timestamp+"&url="+pageUrl;
+        System.out.println("signature------------------------"+signature);
+
+        signature = getSha1(signature);
+        String appid = "wx8a6e796d316ad625";//公众号appid
+        Map<String,Object> wechatSign = new HashMap<String,Object>();
+        wechatSign.put("timestamp", timestamp);
+        wechatSign.put("noncestr", noncestr);
+        wechatSign.put("signature", signature);
+        wechatSign.put("appid", appid);
+        wechatSign.put("pageUrl", pageUrl);
+        model.addAttribute("wechatSign", wechatSign);
+        return "students/time_table";
+    }
 }
