@@ -18,4 +18,14 @@ public interface StudentService {
     String getJsapiTicketOfJssdk(String accessToken);
 
     Integer getStudentIdByName(String studentName);
+
+    List<String> getTecherList();
+
+    List<String> getTecherClassList(String teacher);
+
+    List<Map<String,Object>> getTecherClassStudentList(String classId);
+
+
+
+
 }

@@ -13,8 +13,8 @@
     <!--必要样式-->
     <link rel="stylesheet" type="text/css" href="../studentAccount/css/main.css?v=2" />
     <script src="../studentAccount/js/zepto.min.js" type="text/javascript"></script>
-    <script src="../studentAccount/js/flexiable.js?v=2" type="text/javascript"></script>
-    <script src="../studentAccount/js/timetable.js?v=2" type="text/javascript"></script>
+    <script src="../studentAccount/js/flexiable.js?v=10" type="text/javascript"></script>
+    <script src="../studentAccount/js/timetable.js?v=10" type="text/javascript"></script>
 
     <script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <style>
@@ -35,19 +35,20 @@
       evt代表具体内容。
     */
     var datas= [
-        { "week": 1, "seq": 6, "dur": 1, "evt": "围棋启蒙班" },
         { "week": 1, "seq": 5, "dur": 1, "evt": "美术大2班" },
 
-        { "week": 2, "seq": 6, "dur": 1, "evt": "故事表演" },
-        { "week": 3, "seq": 5, "dur": 1, "evt": "美术小1班"},
+        { "week": 2, "seq": 6, "dur": 1, "evt": "围棋启蒙班" },
 
-        { "week": 4, "seq": 3, "dur": 1, "evt": "美术小2班\n硬笔书法1" },
-        { "week": 4, "seq": 4, "dur": 1, "evt": "动漫基础1" },
-        { "week": 4, "seq": 2, "dur": 1, "evt": "小主持人班\n"},
+        { "week": 3, "seq": 6, "dur": 1, "evt": "故事表演班" },
+        { "week": 4, "seq": 5, "dur": 1, "evt": "美术小1班"},
 
-        { "week": 5, "seq": 1, "dur": 1, "evt": "美术大1班" },
-        { "week": 5, "seq": 2, "dur": 1, "evt": "舞蹈启蒙班\n围棋启蒙班" },
-        { "week": 5, "seq": 3, "dur": 1, "evt": "动漫基础2\n硬笔书法2" },
+        { "week": 5, "seq": 3, "dur": 1, "evt": "美术小2班<br>硬笔书法1班" },
+        { "week": 5, "seq": 4, "dur": 1, "evt": "动漫基础1班" },
+        { "week": 5, "seq": 2, "dur": 1, "evt": "小主持人班"},
+
+        { "week": 6, "seq": 1, "dur": 1, "evt": "美术大1班" },
+        { "week": 6, "seq": 2, "dur": 1, "evt": "舞蹈启蒙班<br>围棋启蒙班" },
+        { "week": 6, "seq": 3, "dur": 1, "evt": "动漫基础2班<br>硬笔书法2班" },
 
     ];
 

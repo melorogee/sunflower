@@ -5,7 +5,7 @@
    _self.config = arguments || {};
 
    if (!_self.config.classNum) _self.config.classNum = "10";
-   if (!_self.config.itemWidth) _self.config.itemWidth = "1.733"; /*rem*/
+   if (!_self.config.itemWidth) _self.config.itemWidth = "1.444"; /*rem*/
    if (!_self.config.itemHeight) _self.config.itemHeight = "1.36";
 
    drawTable();
@@ -21,7 +21,7 @@
        thead = document.createElement("thead"),
        tbody = document.createElement("tbody");
 
-     thead.innerHTML = '<tr><th></th><th>周三</th><th>周四</th><th>周五</th><th>周六</th><th>周日</th></tr>';
+     thead.innerHTML = '<tr><th></th><th>周二</th><th>周三</th><th>周四</th><th>周五</th><th>周六</th><th>周日</th></tr>';
      var str = '';
      for (let i = 1; i <= _self.config.classNum; i++) {
 		 if(i == 1){
@@ -97,7 +97,7 @@
 
      iclass.className += "classitem";
      iclass.innerHTML = obj.evt || "";
-     iclass.setAttribute("style", "height:" + cheight + "rem;top:" + topstart + "rem;left:" + leftstart + "rem;background-color:" + color);
+     iclass.setAttribute("style", "height:" + cheight + "rem;top:" + topstart + "rem;left:" + leftstart + "rem;background-color:" + color+";padding-top:3%;padding-left:1%");
 
      _self[0].append(iclass);
    }

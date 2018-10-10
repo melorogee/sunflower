@@ -47,4 +47,28 @@
     <select id="getStudentIdByName" resultType="java.lang.Integer">
       select student_id from student_info where student_name = #{0}
     </select>
+
+
+    <select id="getTecherList" resultType="java.lang.String">
+      select teacher from class_info group by teacher
+    </select>
+
+    <select id="getTecherClassList" resultType="java.lang.String" parameterType="java.lang.String">
+      select class_id from class_info where teacher = #{0}
+    </select>
+
+    <select id="getTecherClassStudentList" resultType="map" parameterType="java.lang.String">
+      SELECT
+            student_name,
+            goon,
+         update_time,
+         left_class
+        FROM
+            student_class_info
+        WHERE
+            class_id = #{0}
+
+   </select>
+
+
 </mapper>

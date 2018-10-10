@@ -41,16 +41,16 @@ ul,li{list-style: none;}
     }
    .tabletime .classitem{
       position: absolute;
-      width: 1.707rem;
+      width: 1.412rem;
       border-radius: 5px;
       box-sizing: border-box;
       background-color: #ccc;
       color: #fff;
-      font-size:0.32rem;
+      font-size:0.22rem;
       text-align: center;
       overflow: hidden;
       display: flex;
       align-items: left;
-	  margin-left:0.6867rem;
+	  margin-left:0.4967rem;
        text-align : center;
    }  

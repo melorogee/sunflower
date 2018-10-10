@@ -139,4 +139,18 @@ public class StudentServiceImpl implements StudentService {
     public Integer getStudentIdByName(String studentName) {
         return studentDao.getStudentIdByName(studentName);
     }
+
+    public List<String> getTecherList() {
+        return studentDao.getTecherList();
+    }
+
+    public List<String> getTecherClassList(String teacher) {
+        return studentDao.getTecherClassList(teacher);
+    }
+
+    public List<Map<String, Object>> getTecherClassStudentList(String classId) {
+        return studentDao.getTecherClassStudentList(classId);
+    }
+
+
 }

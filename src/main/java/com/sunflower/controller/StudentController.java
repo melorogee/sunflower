@@ -104,6 +104,82 @@ public class StudentController {
     }
 
 
+    @RequestMapping("/teacher_class.do") //url
+    public String teacher_class(HttpServletRequest req, Model model) {
+        //微信分享接口接入
+        //获取access_token
+        String access_token = studentService.getAccessTokenOfJssdk();
+        //根据token获取jsapi_ticket
+        String jsapi_ticket = studentService.getJsapiTicketOfJssdk(access_token);
+        Long timestamp = new Date().getTime()/1000;
+        UUID uuid = UUID.randomUUID();
+        String noncestr=uuid.toString();
+        String param = req.getQueryString();
+        String pageUrl = "http://sunarts.cn/sunflower/students/teacher_class.do";
+        if (param != "" && param != null)
+        {
+            pageUrl = pageUrl + "?" + param;
+        }
+        System.out.println("pageUrl------------------------"+pageUrl);
+        String signature = "jsapi_ticket="+jsapi_ticket+"&noncestr="+noncestr+"&timestamp="+timestamp+"&url="+pageUrl;
+        System.out.println("signature------------------------"+signature);
+
+        signature = getSha1(signature);
+        String appid = "wx8a6e796d316ad625";//公众号appid
+        Map<String,Object> wechatSign = new HashMap<String,Object>();
+        wechatSign.put("timestamp", timestamp);
+        wechatSign.put("noncestr", noncestr);
+        wechatSign.put("signature", signature);
+        wechatSign.put("appid", appid);
+        wechatSign.put("pageUrl", pageUrl);
+        model.addAttribute("wechatSign", wechatSign);
+        return "students/teacher_class";
+    }
+
+
+
+
+    @RequestMapping(value = "/get_teachar_class_info.do")
+    public void goSearch(HttpServletRequest req, HttpServletResponse resp) {
+        try {
+            List<Map<String,Object>> retTeacherList  = new ArrayList<Map<String, Object>>();
+            //获取老师列表
+            List<String> teacher_list = studentService.getTecherList();
+            //循环老师列表获取课程列表
+            for(int i =0; i < teacher_list.size();i ++){
+                Map<String,Object> temp_teacher_obj = new HashMap<String, Object>();
+                String tempTeacher = teacher_list.get(i);
+                temp_teacher_obj.put("teacher_name",tempTeacher);
+
+               List<Map<String,Object>> temp_class_obj = new ArrayList<Map<String, Object>>();
+                //获取老师有的课程
+                List<String> class_id_list = studentService.getTecherClassList(tempTeacher);
+                //获取课程所有学生,是否报名，剩余课程，更新时间
+                for(int j =0;j <class_id_list.size();j++){
+                    String temp_class_id = class_id_list.get(j);
+                    Map<String,Object> temp_teacher_class_obj = new HashMap<String, Object>();
+                    temp_teacher_class_obj.put("class_id",temp_class_id);
+                    List<Map<String,Object>> teacher_class_student_list = studentService.getTecherClassStudentList(temp_class_id);
+                    temp_teacher_class_obj.put("student_list",teacher_class_student_list);
+                    temp_class_obj.add(temp_teacher_class_obj);
+                }
+                temp_teacher_obj.put("teacher_class",temp_class_obj);
+                retTeacherList.add(temp_teacher_obj);
+            }
+            String jsonString = JSONUtils.toJSONString(retTeacherList);
+            req.setCharacterEncoding("UTF-8");
+            resp.setCharacterEncoding("UTF-8");
+            resp.setCharacterEncoding("UTF-8");
+            resp.setContentType("text/html;charset=utf-8");
+            resp.getWriter().write(jsonString);
+            resp.getWriter().flush();
+            resp.getWriter().close();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
 
     public String getSha1(String str) {
         if (null == str || 0 == str.length()){
